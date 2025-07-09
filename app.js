@@ -13,7 +13,7 @@ function redirecionar() {
         texto.textContent = `Digite o valor encontrado no posto ${i + 1}`;
         input.id = `posto${i + 1}`;
         input.type = 'number';
-        input.placeholder = '5.13'
+        input.placeholder = '5.13';
         
         divPostos.appendChild(texto);
         divPostos.appendChild(input);
@@ -49,7 +49,14 @@ function consumoNecessario() {
 }
 
 function menorValor() {
-    pass
+    let menor = parseFloat(Number.MAX_SAFE_INTEGER);
+    for (let i = 0; i < postosPesquisados; i++) {
+        let precoPosto = parseFloat(document.getElementById(`posto${i + 1}`).value);
+        if (menor < precoPosto) {
+            menor = precoPosto;
+        }
+    }
+    return menor;
 }
 
 function saida() {
@@ -59,6 +66,8 @@ function saida() {
     let gastoDiarioTexto = document.createElement("p");
 
     consumoNecessarioTexto.textContent = `O consumo necessário é ${consumoNecessario()} litros`;
-
-
+    menorValorTexto.textContent = `O menor valor pesquisado é R$${menorValor()}`;
+    mediaValoresTexto.textContent = `A média dos valores pesquisados é R$${media()}`;
+    gastoDiarioTexto.textContent = `O gasto diário (ida e volta) é R$${2 * consumoNecessario() * menorValor()}`;
+    
 }
