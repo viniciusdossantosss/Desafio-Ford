@@ -1,10 +1,11 @@
-let distancia;
-let consumo;
-let postosPesquisados;
-
 function redirecionar() {
-    postosPesquisados = Number(document.getElementById("postosPesquisados").value);
+    let postosPesquisados = Number(document.getElementById("postosPesquisados").value);
     let divPostos = document.getElementById("postosInput");
+
+    if (isNaN(postosPesquisados) || postosPesquisados <= 0){
+        alert("Preencha o campo de postos pesquisados com um valor maior que zero para prosseguir.")
+        return 0;
+    }
 
     for (let i = 0; i < postosPesquisados; i++){
         let texto = document.createElement('p');
@@ -25,49 +26,77 @@ function redirecionar() {
     let segundoBotao = document.createElement("button");
     segundoBotao.textContent = "Continuar";
     segundoBotao.id = "segundoBotao";
-    segundoBotao.setAttribute("onClick", "media()");
+    segundoBotao.setAttribute("onClick", "saida()");
     divPostos.appendChild(segundoBotao);
 
 }
 
-function media() {
+let precoLista = [];
+
+function precosPostos() {
+    
+    
+    
+    for (i = 0; i < postosPesquisados.value; i++) {
+        let precoPosto = parseFloat(document.getElementById(`posto${i + 1}`).value);
+        precoLista.push(precoPosto);
+    }
+    
+    return precoLista;
+}
+
+function calcularMedia(lista) {
+    if (lista.length === 0) {
+      return 0; 
+    }
     let soma = 0;
-    for (let i = 0; i < postosPesquisados; i++) {
-        let precoPosto = parseFloat(document.getElementById(`posto${i + 1}`).value);
-        soma = soma + precoPosto;
+    for (let i = 0; i < lista.length; i++) {
+      soma += lista[i];
     }
-    let media = soma/postosPesquisados;
-    return media;
+  
+    return soma / lista.length;
 }
 
-function consumoNecessario() {
-    distancia = parseFloat(document.getElementById("distancia").value);
-    consumoMedio = parseFloat(document.getElementById("consumoMedio").value);
 
-    let consumoNecessario = distancia/consumoMedio;
+
+function consumoNecessario(distancia, consumo) {
+
+    let consumoNecessario = distancia/consumo;
     return consumoNecessario;
+
 }
 
-function menorValor() {
-    let menor = parseFloat(Number.MAX_SAFE_INTEGER);
-    for (let i = 0; i < postosPesquisados; i++) {
-        let precoPosto = parseFloat(document.getElementById(`posto${i + 1}`).value);
-        if (menor < precoPosto) {
-            menor = precoPosto;
-        }
-    }
-    return menor;
+function menorValor(lista) {
+    
+    let menorValor = Math.min(...lista);
+    return menorValor;
 }
 
 function saida() {
+    let precoDosPostos = precosPostos();
+    if (precoDosPostos.length !== postosPesquisados.value){
+        precoLista = [];
+        alert("1");
+        return 0;
+    }
+    let distancia = parseFloat(document.getElementById("distancia").value);
+    let consumoMedio = parseFloat(document.getElementById("consumoMedio").value);
+
     let consumoNecessarioTexto = document.createElement("p");
     let menorValorTexto = document.createElement("p");
     let mediaValoresTexto = document.createElement("p");
     let gastoDiarioTexto = document.createElement("p");
 
-    consumoNecessarioTexto.textContent = `O consumo necessário é ${consumoNecessario()} litros`;
-    menorValorTexto.textContent = `O menor valor pesquisado é R$${menorValor()}`;
-    mediaValoresTexto.textContent = `A média dos valores pesquisados é R$${media()}`;
-    gastoDiarioTexto.textContent = `O gasto diário (ida e volta) é R$${2 * consumoNecessario() * menorValor()}`;
+    consumoNecessarioTexto.textContent = `O consumo necessário é ${consumoNecessario(distancia, consumoMedio)} litros`;
+    menorValorTexto.textContent = `O menor valor pesquisado é R$${menorValor(precoDosPostos)}`;
+    mediaValoresTexto.textContent = `A média dos valores pesquisados é R$${calcularMedia(precoDosPostos)}`;
+    gastoDiarioTexto.textContent = `O gasto diário (ida e volta) é R$${2 * consumoNecessario(distancia, consumoMedio) * menorValor(precoDosPostos)}`;
+
+    let divSaida = document.getElementById("saida");
+
+    divSaida.appendChild(consumoNecessarioTexto);
+    divSaida.appendChild(menorValorTexto);
+    divSaida.appendChild(mediaValoresTexto);
+    divSaida.appendChild(gastoDiarioTexto);
     
 }
