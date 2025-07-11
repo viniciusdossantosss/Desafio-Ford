@@ -57,10 +57,12 @@ function precosPostos() {
 }
 
 function calcularMedia(lista) {
+
     if (lista.length === 0) {
       return 0; 
     }
     let soma = 0;
+
     for (let i = 0; i < lista.length; i++) {
       soma += lista[i];
     }
@@ -71,6 +73,7 @@ function calcularMedia(lista) {
 function consumoNecessario(distancia, consumo) {
 
     let consumoNecessario = distancia/consumo;
+
     return consumoNecessario;
 
 }
@@ -78,12 +81,14 @@ function consumoNecessario(distancia, consumo) {
 function menorValor(lista) {
     
     let menorValor = Math.min(...lista);
+
     return menorValor;
 }
 
 function saida() {
     
     let precoDosPostos = precosPostos();
+
     if (precoDosPostos.length !== Number(postosPesquisados.value)){
         alert("Preencha todos os campos dos preços dos postos");
         return 0;
@@ -106,10 +111,10 @@ function saida() {
     let mediaValoresTexto = document.createElement("p");
     let gastoDiarioTexto = document.createElement("p");
 
-    consumoNecessarioTexto.textContent = `O consumo necessário é ${consumoNecessario(distancia, consumoMedio)} litros`;
-    menorValorTexto.textContent = `O menor valor pesquisado é R$${menorValor(precoDosPostos)}`;
-    mediaValoresTexto.textContent = `A média dos valores pesquisados é R$${calcularMedia(precoDosPostos)}`;
-    gastoDiarioTexto.textContent = `O gasto diário (ida e volta) é R$${2 * consumoNecessario(distancia, consumoMedio) * menorValor(precoDosPostos)}`;
+    consumoNecessarioTexto.textContent = `O consumo necessário é ${(consumoNecessario(distancia, consumoMedio)).toFixed(2)} litros`;
+    menorValorTexto.textContent = `O menor valor pesquisado é R$${(menorValor(precoDosPostos)).toFixed(2)}`;
+    mediaValoresTexto.textContent = `A média dos valores pesquisados é R$${(calcularMedia(precoDosPostos)).toFixed(2)}`;
+    gastoDiarioTexto.textContent = `O gasto diário (ida e volta) é R$${(2 * consumoNecessario(distancia, consumoMedio) * menorValor(precoDosPostos)).toFixed(2)}`;
 
     let divSaida = document.getElementById("saida");
 
