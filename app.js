@@ -2,8 +2,8 @@ function redirecionar() {
     let postosPesquisados = Number(document.getElementById("postosPesquisados").value);
     let divPostos = document.getElementById("postosInput");
 
-    if (isNaN(postosPesquisados) || postosPesquisados <= 0){
-        alert("Preencha o campo de postos pesquisados com um valor maior que zero para prosseguir.")
+    
+    if(verificarValor(postosPesquisados)) {
         return 0;
     }
 
@@ -31,11 +31,22 @@ function redirecionar() {
 
 }
 
-let precoLista = [];
+function verificarValor(campo) {
+    if (isNaN(campo)){
+        alert("Preencha os campos com número.");
+        return true;
+    } else if (campo === ""){
+        alert("Preencha todos os campos");
+        return true;
+    } else if (campo <= 0){
+        alert("Preencha os campos com um valor maior que zero.");
+        return true;
+    }
+}
 
 function precosPostos() {
-    
-    
+
+    let precoLista = [];
     
     for (i = 0; i < postosPesquisados.value; i++) {
         let precoPosto = parseFloat(document.getElementById(`posto${i + 1}`).value);
@@ -57,8 +68,6 @@ function calcularMedia(lista) {
     return soma / lista.length;
 }
 
-
-
 function consumoNecessario(distancia, consumo) {
 
     let consumoNecessario = distancia/consumo;
@@ -73,14 +82,24 @@ function menorValor(lista) {
 }
 
 function saida() {
+    
     let precoDosPostos = precosPostos();
-    if (precoDosPostos.length !== postosPesquisados.value){
-        precoLista = [];
-        alert("1");
+    if (precoDosPostos.length !== Number(postosPesquisados.value)){
+        alert("Preencha todos os campos dos preços dos postos");
         return 0;
     }
+
     let distancia = parseFloat(document.getElementById("distancia").value);
+
+    if (verificarValor(distancia)){
+        return 0;
+    }
+
     let consumoMedio = parseFloat(document.getElementById("consumoMedio").value);
+
+    if(verificarValor(consumoMedio)){
+        return 0;
+    }
 
     let consumoNecessarioTexto = document.createElement("p");
     let menorValorTexto = document.createElement("p");
@@ -93,6 +112,8 @@ function saida() {
     gastoDiarioTexto.textContent = `O gasto diário (ida e volta) é R$${2 * consumoNecessario(distancia, consumoMedio) * menorValor(precoDosPostos)}`;
 
     let divSaida = document.getElementById("saida");
+
+    divSaida.innerHTML = "";
 
     divSaida.appendChild(consumoNecessarioTexto);
     divSaida.appendChild(menorValorTexto);
