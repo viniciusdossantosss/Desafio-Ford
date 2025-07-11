@@ -2,8 +2,10 @@ function redirecionar() {
     let postosPesquisados = Number(document.getElementById("postosPesquisados").value);
     let divPostos = document.getElementById("postosInput");
 
-    
+    // Aterar para gerar um campo por vez
     if(verificarValor(postosPesquisados)) {
+        return 0;
+    } else if (!(postosPesquisados % 1 === 0)){
         return 0;
     }
 
@@ -31,6 +33,8 @@ function redirecionar() {
 
 }
 
+// colocar quantidade de numeros modulo 1 pra verificar se o numero é inteiro
+
 function verificarValor(campo) {
     if (isNaN(campo)){
         alert("Preencha os campos com número.");
@@ -50,6 +54,7 @@ function precosPostos() {
     
     for (i = 0; i < postosPesquisados.value; i++) {
         let precoPosto = parseFloat(document.getElementById(`posto${i + 1}`).value);
+        
         precoLista.push(precoPosto);
     }
     
@@ -92,7 +97,12 @@ function saida() {
     if (precoDosPostos.length !== Number(postosPesquisados.value)){
         alert("Preencha todos os campos dos preços dos postos");
         return 0;
-    }
+    } //else if (verificarValor()){
+    //     alert("Preencha os campos com um valor maior que zero.");
+    // } else if (isNaN(campo)){
+    //     alert("Preencha os campos com número.");
+    //     return true; 
+    // }
 
     let distancia = parseFloat(document.getElementById("distancia").value);
 
