@@ -2,10 +2,7 @@ function redirecionar() {
     let postosPesquisados = Number(document.getElementById("postosPesquisados").value);
     let divPostos = document.getElementById("postosInput");
 
-    // Aterar para gerar um campo por vez
-    if(verificarValor(postosPesquisados)) {
-        return 0;
-    } else if (!(postosPesquisados % 1 === 0)){
+    if (postosPesquisadosQuantidade(postosPesquisados)) {
         return 0;
     }
 
@@ -32,8 +29,6 @@ function redirecionar() {
     divPostos.appendChild(segundoBotao);
 
 }
-
-// colocar quantidade de numeros modulo 1 pra verificar se o numero é inteiro
 
 function verificarValor(campo) {
     if (isNaN(campo)){
@@ -90,19 +85,33 @@ function menorValor(lista) {
     return menorValor;
 }
 
+function postosPesquisadosQuantidade(quantidadePostos) {
+    
+    if(verificarValor(quantidadePostos)) {
+        return true;
+    } else if (!(quantidadePostos % 1 === 0)){
+        alert("O campo de postos pesquisados nâo pode receber um numero flutuante.")
+        return true;
+    } else if (quantidadePostos >= 15){
+        alert("O numero de postos tem que ser menor ou igual a 15.")
+        return true;
+    }
+}
+
 function saida() {
     
+    let postosPesquisados = Number(document.getElementById("postosPesquisados").value);
+    
+    if (postosPesquisadosQuantidade(postosPesquisados)) {
+        return 0;
+    }
+
     let precoDosPostos = precosPostos();
 
-    if (precoDosPostos.length !== Number(postosPesquisados.value)){
-        alert("Preencha todos os campos dos preços dos postos");
+    if (precoDosPostos.length !== postosPesquisados){
+
         return 0;
-    } //else if (verificarValor()){
-    //     alert("Preencha os campos com um valor maior que zero.");
-    // } else if (isNaN(campo)){
-    //     alert("Preencha os campos com número.");
-    //     return true; 
-    // }
+    } 
 
     let distancia = parseFloat(document.getElementById("distancia").value);
 
