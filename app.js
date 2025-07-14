@@ -1,12 +1,13 @@
-let postosPesquisados;
-
 function redirecionar() {
-    postosPesquisados = Number(document.getElementById("postosPesquisados").value);
+    let postosPesquisadosInput = document.getElementById("postosPesquisados");
+    let postosPesquisados = Number(postosPesquisadosInput.value);
     let divPostos = document.getElementById("postosInput");
 
     if (postosPesquisadosQuantidade(postosPesquisados)) {
-        return ;
+        return 0;
     }
+
+    
 
     for (let i = 0; i < postosPesquisados; i++){
         let texto = document.createElement('p');
@@ -30,6 +31,8 @@ function redirecionar() {
     segundoBotao.setAttribute("onClick", "saida()");
     divPostos.appendChild(segundoBotao);
 
+    postosPesquisadosInput.readOnly = true;
+
 }
 
 function verificarValor(campo) {
@@ -48,9 +51,13 @@ function verificarValor(campo) {
 function precosPostos() {
 
     let precoLista = [];
-    
-    for (let i = 0; i < postosPesquisados.value; i++) {
+    let postosPesquisados = Number(document.getElementById("postosPesquisados").value);
+    for (let i = 0; i < postosPesquisados; i++) {
         let precoPosto = parseFloat(document.getElementById(`posto${i + 1}`).value);
+
+        if (verificarValor(precoPosto)) {
+            return true;
+        }
         
         precoLista.push(precoPosto);
     }
@@ -61,7 +68,7 @@ function precosPostos() {
 function calcularMedia(lista) {
 
     if (lista.length === 0) {
-      return ; 
+      return 0; 
     }
     let soma = 0;
 
@@ -114,14 +121,14 @@ function saida() {
 
     if (verificarValor(distancia)){
         console.log("quarto");
-        return ;
+        return 0;
     }
 
     let consumoMedio = parseFloat(document.getElementById("consumoMedio").value);
 
     if(verificarValor(consumoMedio)){
         console.log("quinto");
-        return ;
+        return 0;
     }
 
     let consumoNecessarioTexto = document.createElement("p");
