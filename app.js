@@ -72,6 +72,8 @@ function verificarValor(campo) {
     } else if (campo <= 0){
         alert("Preencha os campos com um valor maior que zero.");
         return true;
+    } else {
+        return false;
     }
 }
 
@@ -163,6 +165,8 @@ function postosPesquisadosQuantidade(quantidadePostos) {
     } else if (quantidadePostos >= 15){
         alert("O numero de postos tem que ser menor ou igual a 15.")
         return true;
+    } else {
+        return false;
     }
 }
 
@@ -180,14 +184,17 @@ function saida() {
     }
 
     // Pega o valor da distância do input e converte para número.
-    let distancia = parseFloat(document.getElementById("distancia").value);
+    let distancia = document.getElementById("distancia").value;
+    distancia = distancia.replace(",",".");
+    distancia = parseFloat(distancia);
+    console.log(distancia);
     // Valida o valor da distância.
     if (verificarValor(distancia)){
         return 0; // Interrompe se for inválido.
     }
 
     // Pega o valor do consumo médio do input e converte para número.
-    let consumoMedio = parseFloat(document.getElementById("consumoMedio").value);
+    let consumoMedio = document.getElementById("consumoMedio").value;
     // Valida o valor do consumo.
     if(verificarValor(consumoMedio)){
         return 0; // Interrompe se for inválido.
