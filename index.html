@@ -246,7 +246,7 @@
                 // Loop para ler o valor de cada posto.
                 for (let i = 0; i < postosPesquisados; i++) {
                     // Obtém o valor de cada input de preço e converte para número decimal (float).
-                    let precoPosto = parseFloat(document.getElementById(`posto${i + 1}`).value);
+                    let precoPosto = parseFloat(document.getElementById(`posto${i + 1}`).value.replace(",", "."));
 
                     // Valida o preço. Se for inválido, a função para.
                     if (verificarValor(precoPosto)) {
@@ -338,14 +338,14 @@
                 }
 
                 // Pega o valor da distância do input e converte para número.
-                let distancia = parseFloat(document.getElementById("distancia").value);
+                let distancia = parseFloat(document.getElementById("distancia").value.replace(",", "."));
                 // Valida o valor da distância.
                 if (verificarValor(distancia)){
                     return 0; // Interrompe se for inválido.
                 }
 
                 // Pega o valor do consumo médio do input e converte para número.
-                let consumoMedio = parseFloat(document.getElementById("consumoMedio").value);
+                let consumoMedio = parseFloat(document.getElementById("consumoMedio").value.replace(",", "."));
                 // Valida o valor do consumo.
                 if(verificarValor(consumoMedio)){
                     return 0; // Interrompe se for inválido.
